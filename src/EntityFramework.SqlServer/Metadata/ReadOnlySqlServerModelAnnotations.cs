@@ -23,7 +23,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
         {
         }
 
-        public virtual SqlServerValueGenerationStrategy? ValueGenerationStrategy
+        public virtual SqlServerIdentityStrategy? IdentityStrategy
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
 
                 return value == null
                     ? null
-                    : (SqlServerValueGenerationStrategy?)Enum.Parse(typeof(SqlServerValueGenerationStrategy), value);
+                    : (SqlServerIdentityStrategy?)Enum.Parse(typeof(SqlServerIdentityStrategy), value);
             }
         }
 

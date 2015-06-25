@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Metadata;
 using Microsoft.Data.Entity.SqlServer.Metadata;
 using Microsoft.Data.Entity.Tests;
@@ -10,7 +9,7 @@ using Xunit;
 
 namespace Microsoft.Data.Entity.SqlServer.Tests.Metadata.ModelConventions
 {
-    public class SqlServerValueGenerationStrategyConventionTest
+    public class SqlServerIdentityStrategyConventionTest
     {
         [Fact]
         public void Annotations_are_added_when_conventional_model_builder_is_used()
@@ -20,14 +19,14 @@ namespace Microsoft.Data.Entity.SqlServer.Tests.Metadata.ModelConventions
             Assert.Equal(1, model.Annotations.Count());
 
             Assert.Equal(SqlServerAnnotationNames.Prefix + SqlServerAnnotationNames.ValueGeneration, model.Annotations.Single().Name);
-            Assert.Equal(SqlServerValueGenerationStrategy.Identity.ToString(), model.Annotations.Single().Value);
+            Assert.Equal(SqlServerIdentityStrategy.IdentityColumn.ToString(), model.Annotations.Single().Value);
         }
 
         [Fact]
         public void Annotations_are_added_when_conventional_model_builder_is_used_with_sequences()
         {
             var model = SqlServerTestHelpers.Instance.CreateConventionBuilder()
-                .ForSqlServer(b => b.UseSequence())
+                .UseSqlServerSequenceHiLo()
                 .Model;
 
             Assert.Equal(3, model.Annotations.Count());
@@ -44,7 +43,7 @@ namespace Microsoft.Data.Entity.SqlServer.Tests.Metadata.ModelConventions
             Assert.Equal(new Sequence(Sequence.DefaultName).Serialize(), model.Annotations.ElementAt(1).Value);
 
             Assert.Equal(SqlServerAnnotationNames.Prefix + SqlServerAnnotationNames.ValueGeneration, model.Annotations.ElementAt(2).Name);
-            Assert.Equal(SqlServerValueGenerationStrategy.Sequence.ToString(), model.Annotations.ElementAt(2).Value);
+            Assert.Equal(SqlServerIdentityStrategy.SequenceHiLo.ToString(), model.Annotations.ElementAt(2).Value);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
         public virtual string ComputedExpression
             => Property[SqlServerComputedExpressionAnnotation] as string;
 
-        public virtual SqlServerValueGenerationStrategy? ValueGenerationStrategy
+        public virtual SqlServerIdentityStrategy? IdentityStrategy
         {
             get
             {
@@ -55,9 +55,9 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
 
                 var strategy = value == null
                     ? null
-                    : (SqlServerValueGenerationStrategy?)Enum.Parse(typeof(SqlServerValueGenerationStrategy), value);
+                    : (SqlServerIdentityStrategy?)Enum.Parse(typeof(SqlServerIdentityStrategy), value);
 
-                return strategy ?? Property.EntityType.Model.SqlServer().ValueGenerationStrategy;
+                return strategy ?? Property.EntityType.Model.SqlServer().IdentityStrategy;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
         {
             var modelExtensions = Property.EntityType.Model.SqlServer();
 
-            if (ValueGenerationStrategy != SqlServerValueGenerationStrategy.Sequence)
+            if (IdentityStrategy != SqlServerIdentityStrategy.SequenceHiLo)
             {
                 return null;
             }

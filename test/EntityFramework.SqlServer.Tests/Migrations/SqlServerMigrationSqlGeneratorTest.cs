@@ -42,7 +42,7 @@ namespace Microsoft.Data.Entity.SqlServer.Migrations
                     Type = "int",
                     IsNullable = false,
                     [SqlServerAnnotationNames.Prefix + SqlServerAnnotationNames.ValueGeneration] =
-                        SqlServerValueGenerationStrategy.Identity.ToString()
+                        SqlServerIdentityStrategy.IdentityColumn.ToString()
                 });
 
             Assert.Equal(
